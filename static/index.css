@@ -1,0 +1,28 @@
+body {
+    padding: 10px;
+}
+
+header a {
+    margin: 0px 5px;
+}
+
+header a:link {
+    color: inherit;
+}
+
+header a:visited {
+    color: inherit;
+}
+
+header a:active {
+    color: FireBrick;
+}
+
+div.img-div {
+    text-align: center;
+}
+
+div.img-div img {
+    margin: 5px auto;
+    display: block;
+}
