@@ -18,8 +18,8 @@ A simple web server built using Rust. It is capable only of serving static files
 4. When the compilation is done, run the executable<br>
 `cargo run`
 
-5. Verify that you see the following output on your terminal<br>
-`Hello, rust web server!`
+5. Verify that you see the following output on your terminal
+> Hello, rust web server!
 
 6. Open a web browser and go to `localhost:3000`. Voila! You should see the home page served by the Rust web server running on your local machine
 
