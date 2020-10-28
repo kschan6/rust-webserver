@@ -15,11 +15,7 @@ async fn main() -> std::io::Result<()> {
 }
 
 fn app_config(config: &mut web::ServiceConfig) {
-    config.service(
-	web::scope("")
-	    .service(Files::new("/", "./static/")
-		     .index_file("index.html")
-	    )
-
+    config.service(Files::new("/", "./static/")
+		   .index_file("index.html")
     );
 }
