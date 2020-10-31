@@ -1,0 +1,16 @@
+#sec-text {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    max-width: 80%; /* to scale nicely if the window's width is small */
+}
+
+#sec-text textarea {
+    height: 50px;
+    margin-bottom: 5px;
+}
+
+#sec-text button {
+    width: 20%;
+    margin-left: auto;
+}
