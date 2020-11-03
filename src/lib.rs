@@ -1,12 +1,13 @@
 //#[macro_use]
 //extern crate diesel;
 
-//use diesel::prelude::*;
-//use diesel::pg::PgConnection;
+use diesel::prelude::*;
+use diesel::pg::PgConnection;
+use diesel::result::ConnectionResult;
 use std::env;
 use std::error::Error;
 
-pub fn con_db() {
+pub fn con_db() -> ConnectionResult<PgConnection> {
     let url = match get_db_url() {
 	Ok(v) => v,
 	Err(e) => {
@@ -14,6 +15,8 @@ pub fn con_db() {
 	    panic!("Error accessing the database URL");
 	}
     };
+
+    PgConnection::establish(&url)
 }
 
 pub fn get_db_url() -> Result<String, Box<dyn Error>> {
@@ -35,6 +38,14 @@ mod tests {
 		println!("{}", e);
 		panic!("Error accessing the database URL");
 	    }
+	}
+    }
+
+    #[test]
+    fn it_connects_db() {
+	match con_db() {
+	    Ok(_) => println!("Connect to db successfully"),
+	    Err(e) => panic!("Error connecting to db, {:?}", e),
 	}
     }
 }
