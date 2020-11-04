@@ -1,5 +1,6 @@
-//#[macro_use]
-//extern crate diesel;
+// allow the use of macros in schema and models modules
+#[macro_use]
+extern crate diesel;
 
 use diesel::prelude::*;
 use diesel::pg::PgConnection;
@@ -7,6 +8,10 @@ use diesel::result::ConnectionResult;
 use std::env;
 use std::error::Error;
 
+pub mod models;
+mod schema;
+
+// establish connection to database
 pub fn con_db() -> ConnectionResult<PgConnection> {
     let url = match get_db_url() {
 	Ok(v) => v,
@@ -19,6 +24,17 @@ pub fn con_db() -> ConnectionResult<PgConnection> {
     PgConnection::establish(&url)
 }
 
+// insert a post into the database table
+pub fn insert_post(db: &PgConnection, post: models::NewPost) {
+    use schema::posts;
+
+    diesel::insert_into(posts::table)
+	.values(&post)
+	.get_result::<models::Post>(db)
+	.expect("Error inserting post");
+}
+
+// get the database URL
 pub fn get_db_url() -> Result<String, Box<dyn Error>> {
     let key = "DATABASE_URL";
     let val = env::var(key)?;

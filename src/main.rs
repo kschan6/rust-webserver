@@ -3,6 +3,7 @@ use actix_web::{App, HttpServer, HttpResponse,
 		Responder, web};
 use serde::{Serialize, Deserialize};
 use minitwitter;
+use minitwitter::models;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -36,14 +37,23 @@ async fn minitwitter_post(obj: web::Json<TextObj>) -> impl Responder {
     println!("val: {}", obj.0.val);
     println!("val2: {}", obj.val); // not sure why we could access obj.val
 
-    match minitwitter::con_db() {
-	Ok(_) => println!("Success connecting to database"),
+    let db = match minitwitter::con_db() {
+	Ok(db) => {
+	    println!("Success connecting to database");
+	    db
+	}
 	Err(e) => {
 	    println!("Error connecting to database");
 	    println!("{}", e);
 	    return HttpResponse::Ok().finish();
 	}
-    }
+    };
+
+    let post = models::NewPost {
+	body: &obj.val,
+    };
+
+    minitwitter::insert_post(&db, post);
 
     // Serialize the received struct object back into a JSON string
     HttpResponse::Ok().json(obj.0)
