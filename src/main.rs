@@ -11,6 +11,8 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(|| {
 	App::new()
+	    .service(web::resource("/minitwitter.html")
+		     .to(minitwitter_page))
 	    .service(web::resource("/minitwitter")
 		     .route(web::post()
 			    .to(minitwitter_post)
@@ -57,4 +59,8 @@ async fn minitwitter_post(obj: web::Json<TextObj>) -> impl Responder {
 
     // Serialize the received struct object back into a JSON string
     HttpResponse::Ok().json(obj.0)
+}
+
+fn minitwitter_page() -> HttpResponse {
+    HttpResponse::Ok().body("Hello")
 }
