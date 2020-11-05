@@ -11,8 +11,8 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(|| {
 	App::new()
-	    .service(web::resource("/minitwitter.html")
-		     .to(minitwitter_page))
+	    .service(web::resource("/minitwitter_view.html")
+		     .to(minitwitter_view))
 	    .service(web::resource("/minitwitter")
 		     .route(web::post()
 			    .to(minitwitter_post)
@@ -61,6 +61,33 @@ async fn minitwitter_post(obj: web::Json<TextObj>) -> impl Responder {
     HttpResponse::Ok().json(obj.0)
 }
 
-fn minitwitter_page() -> HttpResponse {
+fn minitwitter_view() -> HttpResponse {
+    let db = match minitwitter::con_db() {
+	Ok(db) => {
+	    println!("Success connecting to database");
+	    db
+	}
+	Err(e) => {
+	    println!("Error connecting to database");
+	    println!("{}", e);
+	    return HttpResponse::Ok().finish();
+	}
+    };
+
+    let posts = match minitwitter::show_posts(&db) {
+	Ok(v) => v,
+	Err(e) => {
+	    println!("Error showing posts");
+	    println!("{}", e);
+	    return HttpResponse::Ok().finish();
+	}
+    };
+
+    for post in &posts {
+	println!("id: {}", post.id);
+	println!("body: {}", post.body);
+	println!("published: {}", post.published);
+    }
+    
     HttpResponse::Ok().body("Hello")
 }

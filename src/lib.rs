@@ -34,6 +34,14 @@ pub fn insert_post(db: &PgConnection, post: models::NewPost) {
 	.expect("Error inserting post");
 }
 
+// show all posts
+pub fn show_posts(db: &PgConnection) -> QueryResult<Vec<models::Post>> {
+    use schema::posts;
+
+    posts::table
+	.load::<models::Post>(db)
+}
+
 // get the database URL
 pub fn get_db_url() -> Result<String, Box<dyn Error>> {
     let key = "DATABASE_URL";
