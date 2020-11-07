@@ -83,11 +83,37 @@ fn minitwitter_view() -> HttpResponse {
 	}
     };
 
+    let mut out_post = String::new();
+
     for post in &posts {
 	println!("id: {}", post.id);
 	println!("body: {}", post.body);
 	println!("published: {}", post.published);
+
+	// concatenate all the post's body, with <div> tag wrapped around each one
+	out_post = format!("{}<div>{}", out_post, post.body);
+	out_post = format!("{}</div>", out_post);
     }
-    
-    HttpResponse::Ok().body("Hello")
+
+    // generate string for the complete HTML document
+    let out_html = format!("{}{}{}", OUT_HTML1, out_post, OUT_HTML2);
+
+    // serve the dynamically-generated HTML page!
+    HttpResponse::Ok()
+	.content_type("text/html")
+	.body(out_html)
 }
+
+static OUT_HTML1: &'static str = "\
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=\"UTF-8\">
+<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+</head>
+<body>
+<h1>My Posts</h1>";
+
+static OUT_HTML2: &'static str = "\
+</body>
+</html>";
