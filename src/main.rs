@@ -112,18 +112,25 @@ static OUT_HTML1: &'static str = "\
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset=\"UTF-8\">
-<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <link href=\"index.css\" rel=\"stylesheet\">
+    <link href=\"minitwitter.css\" rel=\"stylesheet\">
+    <title>Minitwitter</title>
 </head>
 <body>
+<header>
+    <a href=\"index.html\">Home</a>
+    <a href=\"#\">Minitwitter</a>
+</header>
 <h1>Share Your Thoughts</h1>
-<section id=\"sec-text\">
-      <textarea id=\"sec-textarea\"
-		maxlength=\"140\"
-		required
-		placeholder=\"Write something...\"></textarea>
-      <button type=\"button\">Post</button>
-</section>
+    <section id=\"sec-text\">
+	  <textarea id=\"sec-textarea\"
+		    maxlength=\"140\"
+		    required
+		    placeholder=\"Write something...\"></textarea>
+	  <button type=\"button\">Post</button>
+    </section>
 <h2>Past Posts</h2>";
 
 static OUT_HTML2: &'static str = "\
