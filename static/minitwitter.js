@@ -17,7 +17,7 @@ function clearTextArea() {
 function sendData(data) {
     console.log('data:', data);
 
-    fetch('/minitwitter', {
+    fetch('/minitwitter.html', {
 	method: 'POST',
 	headers: {
 	    'Content-Type': 'application/json',

@@ -11,15 +11,17 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(|| {
 	App::new()
-	    .service(web::resource("/minitwitter_view.html")
-		     .to(minitwitter_view))
-	    .service(web::resource("/minitwitter")
+	    .service(web::resource("/minitwitter.html")
 		     .route(web::post()
 			    .to(minitwitter_post)
 		     )
+		     .route(web::get()
+			    .to(minitwitter_get)
+		     )
 	    )
 	    .service(Files::new("/", "./static/")
-		     .index_file("index.html"))
+		     .index_file("index.html")
+	    )
     })
 	.bind("127.0.0.1:3000")?
 	.run()
@@ -31,7 +33,7 @@ struct TextObj {
     val: String, // must match the JSON object constructed at the front-end
 }
 
-// handle POST request sent to /minitwitter
+// handle POST request sent to /minitwitter.html
 // TextObj will be deserialized from the request body (a JSON string)
 async fn minitwitter_post(obj: web::Json<TextObj>) -> impl Responder {
     println!("obj: {:?}", &obj);
@@ -61,7 +63,9 @@ async fn minitwitter_post(obj: web::Json<TextObj>) -> impl Responder {
     HttpResponse::Ok().json(obj.0)
 }
 
-fn minitwitter_view() -> HttpResponse {
+// handle GET request sent to /minitwitter.html
+// dynamically generate an HTML page that: i) contains all posts ii) allows user to insert a new post
+fn minitwitter_get() -> HttpResponse {
     let db = match minitwitter::con_db() {
 	Ok(db) => {
 	    println!("Success connecting to database");
@@ -112,8 +116,17 @@ static OUT_HTML1: &'static str = "\
 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
 </head>
 <body>
-<h1>My Posts</h1>";
+<h1>Share Your Thoughts</h1>
+<section id=\"sec-text\">
+      <textarea id=\"sec-textarea\"
+		maxlength=\"140\"
+		required
+		placeholder=\"Write something...\"></textarea>
+      <button type=\"button\">Post</button>
+</section>
+<h2>Past Posts</h2>";
 
 static OUT_HTML2: &'static str = "\
+<script src=\"minitwitter.js\"></script>
 </body>
 </html>";
