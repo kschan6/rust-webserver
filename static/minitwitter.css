@@ -1,8 +1,6 @@
 #sec-text {
     display: flex;
     flex-direction: column;
-    width: 400px;
-    max-width: 80%; /* to scale nicely if the window's width is small */
 }
 
 #sec-text textarea {
@@ -13,4 +11,31 @@
 #sec-text button {
     width: 20%;
     margin-left: auto;
+}
+
+#sec-post .post-cell {
+    border: 1px solid grey;
+    margin-bottom: 15px;
+    padding: 0px 5px;
+}
+
+#sec-post .post-body {
+    padding: 5px 0px;
+    margin-bottom: 5px;
+}
+
+#sec-post .post-time {
+    font-size: 0.85em;
+    font-style: italic;
+    text-align: right;
+
+    /* make the whole div right-aligned */
+    width: 30%;
+    margin-left: auto;
+}
+
+/* medium size text display area */
+.text-width-med {
+    width: 400px;
+    max-width: 80%; /* to scale nicely if the window's width is small */
 }

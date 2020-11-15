@@ -89,13 +89,26 @@ fn minitwitter_get() -> HttpResponse {
 
     let mut out_post = String::new();
 
+    // concatenate all the posts and output DOM elements accordingly
     for post in &posts {
 	println!("id: {}", post.id);
 	println!("body: {}", post.body);
 	println!("published: {}", post.published);
 
-	// concatenate all the post's body, with <div> tag wrapped around each one
-	out_post = format!("{}<div>{}", out_post, post.body);
+	// the main div tag wrapping the post content
+	out_post = format!("{}<div class=\"post-cell\">", out_post);
+	
+	// wrap <div> tags around the post body
+	out_post = format!("{}<div class=\"post-body\">{}", out_post, post.body);
+	out_post = format!("{}</div>", out_post);
+
+	// now add the timestamp part
+	let pretty_time = post.published.format("%Y-%m-%d %H:%M").to_string();
+	
+	out_post = format!("{}<div class=\"post-time\">{}", out_post, pretty_time);
+	out_post = format!("{}</div>", out_post);
+
+	// the matching </div> tag of the post content
 	out_post = format!("{}</div>", out_post);
     }
 
@@ -124,16 +137,20 @@ static OUT_HTML1: &'static str = "\
     <a href=\"#\">Minitwitter</a>
 </header>
 <h1>Share Your Thoughts</h1>
-    <section id=\"sec-text\">
+    <section id=\"sec-text\" class=\"text-width-med\">
 	  <textarea id=\"sec-textarea\"
 		    maxlength=\"140\"
 		    required
 		    placeholder=\"Write something...\"></textarea>
 	  <button type=\"button\">Post</button>
     </section>
-<h2>Past Posts</h2>";
+<h2>Past Posts</h2>
+    <section id=\"sec-post\" class=\"text-width-med\">
+";
 
 static OUT_HTML2: &'static str = "\
-<script src=\"minitwitter.js\"></script>
+    </section>
+    <script src=\"minitwitter.js\"></script>
 </body>
-</html>";
+</html>
+";
