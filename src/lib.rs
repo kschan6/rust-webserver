@@ -39,6 +39,7 @@ pub fn show_posts(db: &PgConnection) -> QueryResult<Vec<models::Post>> {
     use schema::posts;
 
     posts::table
+	.filter(posts::body.ne(""))
 	.load::<models::Post>(db)
 }
 
