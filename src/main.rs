@@ -90,7 +90,7 @@ fn minitwitter_get() -> HttpResponse {
     let mut out_post = String::new();
 
     // concatenate all the posts and output DOM elements accordingly
-    for post in &posts {
+    for post in posts.iter().rev() {
 	println!("id: {}", post.id);
 	println!("body: {}", post.body);
 	println!("published: {}", post.published);
