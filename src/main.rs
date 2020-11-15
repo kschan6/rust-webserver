@@ -95,6 +95,11 @@ fn minitwitter_get() -> HttpResponse {
 	println!("body: {}", post.body);
 	println!("published: {}", post.published);
 
+	// ignore empty posts (including those that contain only spaces)
+	if post.body.trim().is_empty() {
+	    continue;
+	}
+
 	// the main div tag wrapping the post content
 	out_post = format!("{}<div class=\"post-cell\">", out_post);
 	
