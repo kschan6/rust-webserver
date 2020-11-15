@@ -145,7 +145,6 @@ static OUT_HTML1: &'static str = "\
     <section id=\"sec-text\" class=\"text-width-med\">
 	  <textarea id=\"sec-textarea\"
 		    maxlength=\"140\"
-		    required
 		    placeholder=\"Write something...\"></textarea>
 	  <button type=\"button\">Post</button>
     </section>
