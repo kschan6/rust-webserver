@@ -10,7 +10,7 @@ btn.addEventListener('click', () => {
 	    clearTextArea();
 	    alert("Blank text is not allowed");
 	} else {
-	    sendData({val: text}); // send a test JSON object
+	    sendData({val: text}); // send text data as JSON object
 
 	    // reload the page to see the newly added post
 	    // specify a considerable timeout value to prevent the reloading from interfering with the response handling process
