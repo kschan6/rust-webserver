@@ -12,8 +12,9 @@ In order to set up our program to access the database, please perform the follow
 1. Install [Diesel CLI](https://github.com/diesel-rs/diesel/tree/master/diesel_cli) with PostgreSQL as the only database dependency:<br>
 `cargo install diesel_cli --no-default-features --features postgres`
 
-2. Next, we need to tell Diesel where to find our database. We do this by setting the PostgreSQL [connection URI](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING) to an environment variable called **DATABASE_URL**. For example, we can add the following line to our .bashrc file:<br>
+2. Next, we need to tell Diesel where to find our database. We do this by setting the PostgreSQL [connection URI](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING) to an environment variable called `DATABASE_URL`. For example, we can add the following line to our .bashrc file:<br>
 `export DATABASE_URL=postgres://user@localhost:5432/temp_db`<br>
+<br>
 Note: The connection URI on your system may differ depending on the chosen database name, port, etc.
 
 3. Create the PostgreSQL database and run the migration:<br>
@@ -21,6 +22,7 @@ Note: The connection URI on your system may differ depending on the chosen datab
 
 4. You should see the following output on your terminal (the database name may differ depending on what you have chosen in step 2 above):<br>
 > Creating database: temp_db
+>
 > Running migration 2020-11-01-031740_create_posts
 
 5. Alright! We should now have a working database and a table called "posts" that allow the web server to store and retrieve posts
@@ -29,7 +31,7 @@ Note: The connection URI on your system may differ depending on the chosen datab
 1. Run the unit tests to make sure the program can connect to the database:<br>
 `cargo test`
 
-2. If all the tests pass, you are good to go! Head over to the following section on how to run the web server. In case of failure, please check that you have followed the steps listed in **Prerequisites** section correctly
+2. If all the tests pass, you are good to go! Head over to the following section on how to run the web server. In case of failure, please check that you have followed the steps listed in [Prerequisites](#prerequisites) section correctly
 
 ## How to Use
 1. Clone this repository into directory `MYDIR` (you can specify other directory):<br>
@@ -49,7 +51,7 @@ Note: The connection URI on your system may differ depending on the chosen datab
 
 6. Open a web browser and go to `localhost:3000`. Voila! You should see the home page served by the Rust web server running on your local machine
 
-7. To test the database access and dynamic page generation features, head over to `http://localhost:3000/minitwitter.html` (or by clicking on the **Minitwitter** hyperlink on the page)
+7. To test the database access and dynamic page generation features, head over to `http://localhost:3000/minitwitter.html` (or by clicking on the "Minitwitter" hyperlink on the page)
 
 8. Type something in the textarea box and then click the "Post" button. The page should reload after a while and you should see the post listed under the "Past Posts" section. That's it! Our web server is able to serve a page dynamically based on the post content, and it could store/retrieve these posts by interacting with a PostgreSQL database
 
