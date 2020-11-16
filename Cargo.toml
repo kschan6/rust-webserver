@@ -1,5 +1,5 @@
 [package]
-name = "minitwitter"
+name = "rust-webserver"
 version = "0.1.0"
 authors = ["kschan <kokseng_92@hotmail.com>"]
 edition = "2018"

@@ -2,8 +2,8 @@ use actix_files::Files;
 use actix_web::{App, HttpServer, HttpResponse,
 		Responder, web};
 use serde::{Serialize, Deserialize};
-use minitwitter;
-use minitwitter::models;
+use rust_webserver;
+use rust_webserver::models;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -41,7 +41,7 @@ async fn minitwitter_post(obj: web::Json<TextObj>) -> impl Responder {
     println!("val: {}", obj.0.val);
     println!("val2: {}", obj.val); // not sure why we could access obj.val
 
-    let db = match minitwitter::con_db() {
+    let db = match rust_webserver::con_db() {
 	Ok(db) => {
 	    println!("Success connecting to database");
 	    db
@@ -57,7 +57,7 @@ async fn minitwitter_post(obj: web::Json<TextObj>) -> impl Responder {
 	body: &obj.val,
     };
 
-    minitwitter::insert_post(&db, post);
+    rust_webserver::insert_post(&db, post);
 
     // Serialize the received struct object back into a JSON string
     HttpResponse::Ok().json(obj.0)
@@ -66,7 +66,7 @@ async fn minitwitter_post(obj: web::Json<TextObj>) -> impl Responder {
 // handle GET request sent to /minitwitter.html
 // dynamically generate an HTML page that: i) contains all posts ii) allows user to insert a new post
 fn minitwitter_get() -> HttpResponse {
-    let db = match minitwitter::con_db() {
+    let db = match rust_webserver::con_db() {
 	Ok(db) => {
 	    println!("Success connecting to database");
 	    db
@@ -78,7 +78,7 @@ fn minitwitter_get() -> HttpResponse {
 	}
     };
 
-    let posts = match minitwitter::show_posts(&db) {
+    let posts = match rust_webserver::show_posts(&db) {
 	Ok(v) => v,
 	Err(e) => {
 	    println!("Error showing posts");
